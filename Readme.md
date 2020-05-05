@@ -35,3 +35,16 @@ rails runner crawl_[target].rb [id]
 rails runner crawl_[target].rb update
 </code>
 </pre>
+
+5. Run server
+<pre>
+<code>
+
+# turn on mysql server on 127.0.0.1:3306
+
+rake db:create
+rake db:migrate
+rails server
+</code>
+
+</pre>
