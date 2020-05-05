@@ -13,7 +13,10 @@ class SimpleRecord < ApplicationRecord
         rec.update({key => val}) if key != "created_at" and key != "updated_at"
       end
     else
-      save
+      begin
+        save
+      rescue
+      end
     end
   end
 
@@ -35,9 +38,10 @@ class SimpleRecord < ApplicationRecord
       abx.each do |x| 
         x << obj
       end
+	  
       block.call obj, res if block
 
-      obj.create_or_replace
+	  obj.create_or_replace
     end
   end
 
@@ -56,9 +60,9 @@ class SimpleRecord < ApplicationRecord
         retry
       end
 
-      cnt = 100000000000
+	  cnt = 15**10
       gz.each_line do |x|
-        if cnt > 0 then
+		if cnt > 0 then
           crawl [JSON.parse(x)["id"]]
           cnt -= 1
         end
@@ -79,7 +83,7 @@ class SimpleRecord < ApplicationRecord
       url = base_url % [1]
       res = JSON.parse(open(url).read)
 
-      cnt = 100000000000
+      cnt = 15**10
       for i in (1..res["total_pages"]) do
         if i > 1 then
           url = base_url % [i]

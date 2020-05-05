@@ -29,9 +29,8 @@ class IndexController < ApplicationController
       @list = nil
 
       @info = []
-      @info.append(attr_series(Person.joins(:movies).where("movies.id = #{t.id}"), "Credits"))
+      @info.append(attr_series(t.people.uniq, "Credits"))
 
-      p @info
       render :list
     end
   end
@@ -59,12 +58,11 @@ class IndexController < ApplicationController
       @list = nil
 
       @info = []
-      @info.append(attr_series(Movie.joins(:people).where("people.id = #{t.id}"), "Movies"))
-      @info.append(attr_series(Tv.joins(:people).where("people.id = #{t.id}"), "Tvs"))
-      @info.append(attr_series(TvSeason.joins(:people).where("people.id = #{t.id}"), "Tv Seasons"))
-      @info.append(attr_series(TvEpisode.joins(:people).where("people.id = #{t.id}"), "Tv Episodes"))
+      @info.append(attr_series(t.movies.uniq, "Movies"))
+      @info.append(attr_series(t.tvs.uniq, "Tvs"))
+      @info.append(attr_series(t.tv_seasons.uniq, "Tv Seasons"))
+      @info.append(attr_series(t.tv_episodes.uniq, "Tv Episodes"))
 
-      p @info
       render :list
     end
   end
@@ -93,11 +91,10 @@ class IndexController < ApplicationController
       @list = nil
 
       @info = []
-      @info.append(attr_series(Person.joins(:tvs).where("tvs.id = #{t.id}"), "Credits"))
-      @info.append(attr_series(t.tv_seasons, "Seasons"))
-      @info.append(attr_series(t.tv_episodes, "Episodes"))
+      @info.append(attr_series(t.people.uniq, "Credits"))
+      @info.append(attr_series(t.tv_seasons.uniq, "Seasons"))
+      @info.append(attr_series(t.tv_episodes.uniq, "Episodes"))
 
-      p @info
       render :list
     end
   end
@@ -124,10 +121,9 @@ class IndexController < ApplicationController
       @list = nil
 
       @info = []
-      @info.append(attr_series(Person.joins(:tv_seasons).where("tv_seasons.id = #{t.id}"), "Credits"))
-      @info.append(attr_series(t.tv_episodes, "Episodes"))
+      @info.append(attr_series(t.people.uniq, "Credits"))
+      @info.append(attr_series(t.tv_episodes.uniq, "Episodes"))
 
-      p @info
       render :list
     end
   end
@@ -153,9 +149,8 @@ class IndexController < ApplicationController
       @list = nil
 
       @info = []
-      @info.append(attr_series(Person.joins(:tv_episodes).where("tv_episodes.id = #{t.id}"), "Credits"))
+      @info.append(attr_series(t.people.uniq, "Credits"))
 
-      p @info
       render :list
     end
   end

@@ -51,9 +51,15 @@ class CreditRecord < ApplicationRecord
 
               obj.role = JSON.generate(con)
               x.send(self.model_name.plural) << obj
-              Person.find(y["id"]).send(self.model_name.plural) << obj
+              
+              begin
+                rec = Person.find(y["id"])
+                rec.send(self.model_name.plural) << obj if rec
 
-              obj.save
+                obj.save
+              rescue
+              end
+              
             end
           end
         end
