@@ -3,9 +3,18 @@ TMDB Simple App
 0. Requirement
 <pre>
 <code>
+
+# turn on mysql server on 127.0.0.1:3306
+
+# uses account : root, password : password
+
 cd crawler
+
+rake db:create
+rake db:migrate
 export APIKEY=[your api key]
 </code>
+
 </pre>
 
 1. Crawl all
@@ -39,11 +48,6 @@ rails runner crawl_[target].rb update
 5. Run server
 <pre>
 <code>
-
-# turn on mysql server on 127.0.0.1:3306
-
-rake db:create
-rake db:migrate
 rails server
 </code>
 
