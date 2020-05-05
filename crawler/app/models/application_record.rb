@@ -4,6 +4,6 @@ class ApplicationRecord < ActiveRecord::Base
 
   protected
   def self.api_key
-	ENV["apikey"]
+	ENV["APIKEY"]
   end
 end

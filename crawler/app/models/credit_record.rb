@@ -60,6 +60,4 @@ class CreditRecord < ApplicationRecord
 		end
 	end
   end
-
-
 end
