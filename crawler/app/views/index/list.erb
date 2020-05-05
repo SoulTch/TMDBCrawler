@@ -1,0 +1,28 @@
+<p> <%= @title.to_s %> </p>
+<% if @content then %>
+	<p> <%= @content %> </p>
+<% end %>
+<p></p>
+
+<% if @list then %>
+	<% @list.each do |x| %>
+		<% if x[:link] then%>
+			<p><a href="<%= x[:link] %>"> <%= x[:content] %></a></p>
+		<% else %>
+			<p> <%= x[:content] %></p>
+		<% end%>
+	<% end %>
+<% end %>
+
+<% if @info then 
+	@info.each do |x| %>
+	<p> <%= x[:key] %> <p>
+		<% x[:val].each do |x| %>
+			<% if x[:link] then%>
+				<p style = "margin-left: 25px;"><a href="<%= x[:link] %>"> <%= x[:content] %></a></p>
+			<% else %>
+				<p style = "margin-left: 25px;"> <%= x[:content] %></p>
+			<% end%>
+		<% end %>
+	<p> <p>
+<% end end%>
