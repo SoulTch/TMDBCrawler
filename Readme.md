@@ -18,6 +18,20 @@ rails runner crawl.rb
 2. Crawl all movie/person/tv
 <pre>
 <code>
-rails runner crawl_(target).rb
+rails runner crawl_[target].rb
+</code>
+</pre>
+
+3. Crawl specific movie/person/tv
+<pre>
+<code>
+rails runner crawl_[target].rb [id]
+</code>
+</pre>
+
+4. Update differencies for movie/person/tv
+<pre>
+<code>
+rails runner crawl_[target].rb update
 </code>
 </pre>
