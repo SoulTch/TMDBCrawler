@@ -6,42 +6,29 @@ require 'set'
 class SimpleRecord < ApplicationRecord
   self.abstract_class = true
 
-  def create_or_replace
-    rec = self.class.find_by_id(id)
-    if rec then
-      attributes.each do |key, val|
-        rec.update({key => val}) if key != "created_at" and key != "updated_at"
-      end
-    else
-      begin
-        save
-      rescue
-      end
-    end
-  end
-
   protected
   def self.set_crawl(query_url, block = nil)
     define_singleton_method :crawl do |query_param, abx = []|
       query = query_url % query_param
       url = "https://api.themoviedb.org/3%s?api_key=%s" % [query, api_key]
 
-      res = JSON.parse(open(url).read)
-      obj = self.new()
+	  res = JSON.parse(open(url).read)
+
+	  obj = self.find_by_id(res["id"])
+	  obj = self.new() if not obj
 
       res.each do |key, val| 
         if obj.respond_to?(key)
           obj[key] = val
         end
-      end
-
+	  end
+	  
       abx.each do |x| 
         x << obj
       end
-	  
-      block.call obj, res if block
+	  obj.save
 
-	  obj.create_or_replace
+	  block.call obj, res if block
     end
   end
 
@@ -60,7 +47,7 @@ class SimpleRecord < ApplicationRecord
         retry
       end
 
-	  cnt = 15**10
+	  cnt = limit
       gz.each_line do |x|
 		if cnt > 0 then
           crawl [JSON.parse(x)["id"]]
@@ -83,7 +70,7 @@ class SimpleRecord < ApplicationRecord
       url = base_url % [1]
       res = JSON.parse(open(url).read)
 
-      cnt = 15**10
+      cnt = limit
       for i in (1..res["total_pages"]) do
         if i > 1 then
           url = base_url % [i]

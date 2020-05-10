@@ -59,7 +59,6 @@ class CreditRecord < ApplicationRecord
                 obj.save
               rescue
               end
-              
             end
           end
         end
