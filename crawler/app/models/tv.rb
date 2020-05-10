@@ -6,10 +6,8 @@ class Tv < SimpleRecord
 	has_many :people, through: :tv_credits
 
 	set_crawl "/tv/%d", (Proc.new do |obj, json|
-		if true then
 		json["seasons"].each do |col| 
 			TvSeason.crawl [obj["id"], col["season_number"]], [obj.tv_seasons]
-		end
 	end
 	end)
 	set_crawl_all 	"tv_series"
