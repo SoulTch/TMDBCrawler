@@ -12,23 +12,23 @@ class SimpleRecord < ApplicationRecord
       query = query_url % query_param
       url = "https://api.themoviedb.org/3%s?api_key=%s" % [query, api_key]
 
-	  res = JSON.parse(open(url).read)
+      res = JSON.parse(open(url).read)
 
-	  obj = self.find_by_id(res["id"])
-	  obj = self.new() if not obj
+      obj = self.find_by_id(res["id"])
+      obj = self.new() if not obj
 
       res.each do |key, val| 
         if obj.respond_to?(key)
           obj[key] = val
         end
-	  end
-	  
+      end
+      
       abx.each do |x| 
         x << obj
       end
-	  obj.save
+      obj.save
 
-	  block.call obj, res if block
+      block.call obj, res if block
     end
   end
 
@@ -47,9 +47,9 @@ class SimpleRecord < ApplicationRecord
         retry
       end
 
-	  cnt = limit
+      cnt = limit
       gz.each_line do |x|
-		if cnt > 0 then
+        if cnt > 0 then
           crawl [JSON.parse(x)["id"]]
           cnt -= 1
         end
